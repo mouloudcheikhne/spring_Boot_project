@@ -1,0 +1,19 @@
+.service{
+    width: 300px;
+    height: 300px;
+    margin-left: 50px;
+    
+    margin-bottom: 15px;
+    background-color:#fff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.service h2{
+    color: #3674B5;
+}
+p{
+    /* white-space: nowrap; */
+    overflow: hidden;
+    
+    overflow-wrap: break-word;
+    /* text-overflow: ellipsis; */
+}

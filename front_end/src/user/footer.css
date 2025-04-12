@@ -1,0 +1,30 @@
+.footer{
+    background-color: #3674B5;
+    /* background-color: black; */
+    margin-top: auto;
+}
+.icons{
+    display: flex;
+    justify-content: center;
+    padding: 20px 20px;
+}
+
+.icons div .svg{
+    margin-left: 20px;
+    font-size: 24px;
+    width: 40px;     
+    height: 40px;
+}
+.element{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.element .link{
+    color: #fff;
+    margin-left: 20px;
+    padding: 10px 10px;
+    text-decoration: none;
+    font-size: 26px;
+}
