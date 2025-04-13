@@ -1,6 +1,7 @@
 package com.example.backend.jwtModule.utils;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,8 +41,11 @@ public class JwtFilter extends OncePerRequestFilter {
                 if (jwtUtil.validateToken(token)) {
                     String role = jwtUtil.extractRole(token); // استخدم claim "role"
                     GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
-                            null, userDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            List.of(authority)
+                    );
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }

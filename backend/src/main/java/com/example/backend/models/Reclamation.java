@@ -27,7 +27,7 @@ class Reclamation {
     private String  description;
     @ManyToOne
     @JoinColumn(name = "id_service") 
-    private Service service;
+    private ServiceModel service;
 
     @ManyToOne
     @JoinColumn(name = "id_user") 
