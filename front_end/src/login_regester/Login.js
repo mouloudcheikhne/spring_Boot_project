@@ -1,7 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-export default function Login() {
+export default function Login({usr}) {
+  const nvigate=useNavigate();
   const email=useRef()
   const password=useRef()
   const [donne,setdonne]=useState({})
@@ -31,8 +33,28 @@ axios.post("http://localhost:8099/auth/login",loginData)
   }
   useEffect(()=>{
     // console.log(donne)
+    const l=localStorage.getItem("user");
+    if(!l){
+      
+    }
     
     localStorage.setItem("user",JSON.stringify(donne))
+    const a=JSON.parse(localStorage.getItem("user"));
+   
+    if(a.rol=="USER"){
+      usr(a);
+      console.log("user== "+a);
+      nvigate("/");
+      
+    }
+    if(a.rol=="ADMIN"){
+      console.log("admin== "+a);
+      usr(a);
+      nvigate("/admin");
+    }
+    else{
+      usr(null);
+    }
     // console.log("user conect   "+JSON.parse(localStorage.getItem("user")))
     
   },[donne]);

@@ -1,3 +1,22 @@
-.container{
-    min-height: 100vh;
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.navbar {
+  grid-row: 1;
+  background-color: aquamarine;
+}
+
+.content {
+  background-color: blue;
+  grid-row: 2;
+  height: 900px;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.footer {
+  background-color: brown;
+  grid-row: 3;
 }

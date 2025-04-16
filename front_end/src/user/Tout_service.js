@@ -7,15 +7,16 @@ export default function Tout_service() {
   useEffect(()=>{
     axios.get("http://localhost:8099/service")
     .then(res=>{
-      setservices(res.data)
+      setservices(res.data);
+      // console.log(res.data);
       
-    }).catch(error=>console.log("erer "))
+    }).catch(error=>console.log("erer "+error))
   },[])
   return (
     
 <div className='tout_service'>
        {services.map(service=>(
-        <Service/>
+        <Service key={service.id} service={service}/>
        ))}
         
        

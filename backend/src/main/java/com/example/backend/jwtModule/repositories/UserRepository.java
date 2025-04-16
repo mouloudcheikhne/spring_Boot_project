@@ -14,4 +14,5 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
     @Query("SELECT u.role FROM AppUser u WHERE u.email = :email")
     String findRoleByUsername(@Param("email") String username);
+
 }
