@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.jwtModule.models.AppUser;
+import com.example.backend.models.Reclamation;
 import com.example.backend.models.ServiceModel;
+import com.example.backend.repositories.ReclamationRepo;
 import com.example.backend.repositories.ServiceRepositorie;
 import com.example.backend.repositories.UsersRepo;
 
@@ -18,6 +20,8 @@ public class Myservice {
     ServiceRepositorie mySerciceRepo;
     @Autowired
     UsersRepo usersRepo;
+    @Autowired
+    private ReclamationRepo reclaRepo;
 
     public List<ServiceModel> getAll() {
 
@@ -41,6 +45,34 @@ public class Myservice {
 
     }
 
-   
+    public List<Reclamation> getallreclamation() {
+
+        return reclaRepo.findAll();
+    }
+
+    public String updateReclamtion(Long id, Reclamation recla) {
+        Optional<Reclamation> optionreclamtion = reclaRepo.findById(id);
+        if (optionreclamtion.isPresent()) {
+            Reclamation re = optionreclamtion.get();
+            if (recla.getDescription() != null) {
+                re.setDescription(recla.getDescription());
+            }
+            reclaRepo.save(re);
+            return "reclamtion est modifie";
+        }
+        return "reclamtion ne pas modifie";
+
+    }
+
+    public String deltereclamtion(Long id) {
+        Optional<Reclamation> optionreclamtion = reclaRepo.findById(id);
+        if (optionreclamtion.isPresent()) {
+            Reclamation re = optionreclamtion.get();
+
+            reclaRepo.delete(re);
+            return "reclamtion est delete";
+        }
+        return "reclamtion pas delete ";
+    }
 
 }

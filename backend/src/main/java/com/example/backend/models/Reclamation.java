@@ -1,7 +1,6 @@
 package com.example.backend.models;
 
 import com.example.backend.jwtModule.models.AppUser;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,16 +19,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "reclamation")
-class Reclamation {
+public class Reclamation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long  id;
-    private String  description;
+    private Long id;
+    private String description;
     @ManyToOne
-    @JoinColumn(name = "id_service") 
+    @JoinColumn(name = "id_service")
     private ServiceModel service;
 
     @ManyToOne
-    @JoinColumn(name = "id_user") 
+    @JoinColumn(name = "id_user")
     private AppUser user;
 }
