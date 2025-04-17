@@ -25,6 +25,7 @@ public class Reclamation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
+    private String etat = "En attente";
     @ManyToOne
     @JoinColumn(name = "id_service")
     private ServiceModel service;

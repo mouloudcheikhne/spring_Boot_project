@@ -2,11 +2,13 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import './nav.css';
 import { IoMdNotifications } from "react-icons/io";
+
 export default function NavBar() {
     
   return (
-    
+
         <nav className='navbar_user'>
+          
             <div className='partie1'>
                 <Link to={""} className='logo'>
                 Home

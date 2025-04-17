@@ -7,21 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.jwtModule.models.AppUser;
 import com.example.backend.jwtModule.repositories.UserRepository;
+import com.example.backend.models.Reclamation;
 import com.example.backend.models.ServiceModel;
+import com.example.backend.repositories.ReclamationRepo;
 import com.example.backend.repositories.ServiceRepositorie;
 import com.example.backend.services.Myservice;
-import com.example.backend.models.Reclamation;
-import com.example.backend.repositories.ReclamationRepo;
 
 @RestController
 public class mycontrollers {
@@ -36,7 +35,7 @@ public class mycontrollers {
 
     @Autowired
     private ReclamationRepo reclaRepo;
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/service")
     public List<ServiceModel> getALLServices() {
         return myservice.getAll();
@@ -113,6 +112,10 @@ public class mycontrollers {
     @GetMapping("/admin/deleterecalmtion/{id}")
     public String deltereclamtion(@PathVariable Long id) {
         return myservice.deltereclamtion(id);
+    }
+    @GetMapping("/admin/changereclamtion/{id}")
+    public String changeEtatReclamtion(@PathVariable Long id) {
+        return myservice.changeEtatRecla(id);
     }
     
     

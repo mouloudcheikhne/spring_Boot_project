@@ -3,11 +3,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Login({usr}) {
+  const [etat,setEat]=useState(false);
   const nvigate=useNavigate();
   const email=useRef()
   const password=useRef()
   const [donne,setdonne]=useState({})
-  const handesubmit=(e)=>{
+  const handesubmit=async(e)=>{
 e.preventDefault();
 // console.log(email.current.value);
 // console.log(password.current.value);
@@ -16,48 +17,42 @@ const loginData={
   "password":password.current.value
 }
 // setdonne((values)=>({...values,[email.current.name]:email.current.value,[password.current.name]:password.current.value}))
-axios.post("http://localhost:8099/auth/login",loginData)
-.then((res)=>(
-   setdonne(res.data)
-   
-  ))
-.catch((error)=>{
-  if (error.response) {
-    console.log(" il y a une erreur :", error.response.data.message );
-  } else {
-    console.log("Erreur inconnue :", error.message);
+try{
+  const res=await axios.post("http://localhost:8099/auth/login",loginData);
+  setdonne(res.data);
+      
+  localStorage.setItem("user",JSON.stringify(res.data))
+  const a=JSON.parse(localStorage.getItem("user"));
+  if(a.rol=="USER"){
+    usr(a);
+    console.log("user== "+a);
+    nvigate("/");
+    
   }
-})
+  if(a.rol=="ADMIN"){
+    console.log("admin== "+a);
+    usr(a);
+    nvigate("/admin");
+  }
+  else{
+    usr(null);
+  }
+  setEat(true);
+  
+}catch(error){
+  console.log(" il y a une erreur :", error.response.data.message );
+}
+
+
 
 
   }
   useEffect(()=>{
-    // console.log(donne)
-    const l=localStorage.getItem("user");
-    if(!l){
-      
-    }
-    
-    localStorage.setItem("user",JSON.stringify(donne))
-    const a=JSON.parse(localStorage.getItem("user"));
-   
-    if(a.rol=="USER"){
-      usr(a);
-      console.log("user== "+a);
-      nvigate("/");
-      
-    }
-    if(a.rol=="ADMIN"){
-      console.log("admin== "+a);
-      usr(a);
-      nvigate("/admin");
-    }
-    else{
-      usr(null);
-    }
+    console.log(donne)
+ 
     // console.log("user conect   "+JSON.parse(localStorage.getItem("user")))
     
-  },[donne]);
+  },[etat]);
   return (
     <div>
       <h3>Login</h3>

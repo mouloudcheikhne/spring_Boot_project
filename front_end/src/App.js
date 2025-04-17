@@ -15,6 +15,7 @@ import Layaout_Admin from './admin/layaout_Admin';
 import Users from './admin/users';
 import ServiceCrude from './admin/serviceCrude';
 import Logout from './login_regester/logout';
+import ReclamationCrude from './admin/ReclamationCrude';
 function App() {
   const [user,setUser]=useState(()=>{
 
@@ -50,6 +51,7 @@ function App() {
         {index:true,element:<Admin/>},
         {path:"users",element:<Users/>},
         {path:"service",element:<ServiceCrude/>},
+        {path:"reclamation",element:<ReclamationCrude/>},
       ]}, {path:"/regester",element:<Regester/>},
       
       {path:"/logout",element:<Logout usr={setUser}/>}

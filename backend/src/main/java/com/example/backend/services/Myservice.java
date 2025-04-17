@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.jwtModule.models.AppUser;
 import com.example.backend.models.Reclamation;
 import com.example.backend.models.ServiceModel;
 import com.example.backend.repositories.ReclamationRepo;
@@ -73,6 +72,17 @@ public class Myservice {
             return "reclamtion est delete";
         }
         return "reclamtion pas delete ";
+    }
+
+    public String changeEtatRecla(Long id) {
+        // TODO Auto-generated method stub
+        int a = reclaRepo.changeEtat(id);
+        if (a > 0) {
+            return "il update";
+        } else {
+
+            return "pas update ";
+        }
     }
 
 }

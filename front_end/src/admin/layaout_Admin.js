@@ -1,36 +1,33 @@
-import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
-import "./layout_admin.css"
-import axios from 'axios'
-export default function Layaout_Admin() {
-    var token="";
-    const etatUser=()=>{
-        
-        return localStorage.getItem("user")?true:false;
-        
-    }
-    if(etatUser){
-        const a=localStorage.getItem("user");
-        token=JSON.parse(a).token
-        // console.log(token)
-    }
-   
-  return (
-    <div className='containeer'>
-        <div className='nav_admin'>
-            <div className='home'>
+import React from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import './layout_admin.css';
+import { FaHome, FaUsers, FaCogs, FaComments, FaSignOutAlt, FaSignInAlt } from 'react-icons/fa';
 
-            <Link to={"/admin"} className='a'>ADMIN</Link>
-            <Link to={"/admin/service"} className='a' >service</Link>
-            <Link to={"#"} className='a' >reclamation</Link>
-            <Link to={"/admin/users"} className='a' >users</Link>
-            </div>
-            {etatUser?<Link to={"/logout"} className='login_admin'>logout</Link>:<Link to={"/"} className='login_admin'>Login</Link>}
-            
-            
+export default function Layaout_Admin() {
+  const etatUser = () => {
+    return localStorage.getItem('user') ? true : false;
+  };
+
+  return (
+    <div className="admin-layout">
+      <aside className="sidebar-modern">
+        <div className="logo">⚙️Admin</div>
+        <nav className="nav-items">
+          <Link to="/admin" className="nav-item"><FaHome /> <span>Dashboard</span></Link>
+          <Link to="/admin/service" className="nav-item"><FaCogs /> <span>Services</span></Link>
+          <Link to="/admin/reclamation" className="nav-item"><FaComments /> <span>Réclamations</span></Link>
+          <Link to="/admin/users" className="nav-item"><FaUsers /> <span>Utilisateurs</span></Link>
+        </nav>
+        <div className="auth-section">
+          {etatUser()
+            ? <Link to="/logout" className="nav-item logout"><FaSignOutAlt /> <span>Logout</span></Link>
+            : <Link to="/" className="nav-item login"><FaSignInAlt /> <span>Login</span></Link>}
         </div>
-        <Outlet></Outlet>
-        
+      </aside>
+
+      <main className="admin-content">
+        <Outlet />
+      </main>
     </div>
-  )
+  );
 }
