@@ -9,7 +9,7 @@ export default function ReclamationCrude() {
     
     const getData = async () => {
         try {
-          const res = await axios.get("http://localhost:8099/admin/recalmations", {
+          const res = await axios.get("http://localhost:8091/admin/tickes", {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -35,24 +35,25 @@ export default function ReclamationCrude() {
     }, [token]);
     const deleteReclamtion=async(id)=>{
         // /admin/deleterecalmtion/{id}
+        // console.log(token);
         try {
-            await axios.get(`http://localhost:8099/admin/deleterecalmtion/${id}`, {
+            await axios.get(`http://localhost:8091/admin/tickes/delte/${id}`, {
               headers: {
                 Authorization: `Bearer ${token}`
               }
             });
-            console.log("reclamtion est delte");
+            console.log("tickes est delte");
             getData();
            
           } catch (error) {
-            console.log("error reclamtion pas delette: " + error);
+            console.log("error tickes pas delette: " + error);
           }
-        // console.log(id);
+        console.log(id);
     }
     const updateReclamtion=async(id)=>{
         // http://localhost:8099/admin/changereclamtion/2
         try {
-            await axios.get(`http://localhost:8099/admin/changereclamtion/${id}`, {
+            await axios.get(`http://localhost:8091/admin/changereclamtion/${id}`, {
               headers: {
                 Authorization: `Bearer ${token}`
               }
@@ -71,7 +72,7 @@ export default function ReclamationCrude() {
       <table className="table table-striped mt-3">
         <thead>
           <tr>
-            <th>Nom service</th>
+            <th>Nom Agent</th>
             <th>Email user</th>
             <th>Description</th>
             <th>Etat</th>
@@ -81,11 +82,11 @@ export default function ReclamationCrude() {
         </thead>
         <tbody>
           {reclamtion.map((u) => (
-            <tr key={u.id} style={{ backgroundColor: u.etat == "termine" ? 'red' : 'white' }}>
-              <td>{u.service.nom}</td>
-              <td>{u.user.email}</td>
+            <tr key={u.id} style={{ backgroundColor: u.status == "termine" ? 'red' : 'white' }}>
+             <td>{u.user_AGENT?.nom || "N/A"}</td>
+              <td>{u.user_id.email}</td>
               <td>{u.description}</td>
-              <td>{u.etat}</td>
+              <td>{u.status}</td>
               <td>
                 <button className="btn btn-primary" onClick={() => { updateReclamtion(u.id)}}>
                   UPDATE EATT

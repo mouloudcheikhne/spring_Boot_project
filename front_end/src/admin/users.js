@@ -22,7 +22,7 @@ export default function Users() {
   
   const getData = async () => {
     try {
-      const res = await axios.get("http://localhost:8099/admin/users", {
+      const res = await axios.get("http://localhost:8091/admin/users", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -57,7 +57,7 @@ export default function Users() {
       password: password.current.value,
     };
     try {
-      await axios.post("http://localhost:8099/auth/signup", newUser);
+      await axios.post("http://localhost:8091/auth/signup", newUser);
        nom.current.value = "";
     prenom.current.value = "";
     email.current.value = "";
@@ -76,7 +76,7 @@ export default function Users() {
       email: email_up.current.value,
     };
     try {
-      await axios.put(`http://localhost:8099/admin/updateuser/${id}`, userUp,{
+      await axios.put(`http://localhost:8091/admin/updateuser/${id}`, userUp,{
         headers: {
           Authorization: `Bearer ${token}`
         }}
@@ -91,7 +91,7 @@ export default function Users() {
   // delete user
   const deleteUser = async (id) => {
     try {
-      await axios.get(`http://localhost:8099/admin/deleteuser/${id}`,{
+      await axios.get(`http://localhost:8091/admin/deleteuser/${id}`,{
         headers: {
           Authorization: `Bearer ${token}`
         }});

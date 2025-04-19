@@ -1,14 +1,19 @@
 package com.example.backend.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.example.backend.jwtModule.models.AppUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -31,7 +36,6 @@ public class Tickets {
     private String description;
     private String title;
     private String status = "open";
-    
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -41,6 +45,10 @@ public class Tickets {
     private AppUser user_AGENT;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    @OneToMany(mappedBy = "ticket_id", cascade = CascadeType.REMOVE)
+    
+    @JsonIgnore
+    private List<Ticket_comments> comments;
 
     @PrePersist
     protected void onCreate() {

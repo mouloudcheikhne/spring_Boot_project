@@ -42,7 +42,7 @@ export default function ServiceCrude() {
             "description":description.current.value,
         }
         try{
-        await axios.post("http://localhost:8099/admin/add/service", newservice,{
+        await axios.post("http://localhost:8091/admin/allticketcomments", newservice,{
             headers:{
                Authorization: `Bearer ${token}`
             }
