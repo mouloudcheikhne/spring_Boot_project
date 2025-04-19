@@ -136,4 +136,39 @@ public class AuthController {
         return userRepository.findAll();
     }
 
+    @GetMapping("/admin/agent")
+    public List<AppUser> getagents() {
+        return userRepository.toutAgent();
+    }
+
+    @PostMapping("/admin/regester")
+    public ResponseEntity<?> ajouteUser(@RequestBody SignupRequest request) {
+        //TODO: process POST request
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "\"email est de existe"));
+        }
+        try {
+
+            AppUser user = AppUser.builder()
+                    .nom(request.getNom())
+                    .prenom(request.getPrenom())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .email(request.getEmail())
+                    .role(request.getRol())
+                    .build();
+
+            userRepository.save(user);
+
+            // return jwtUtil.generateToken(user.getEmail(),user.getRole());
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", "user pas enregestre avec admin"));
+        }
+
+    }
+
 }

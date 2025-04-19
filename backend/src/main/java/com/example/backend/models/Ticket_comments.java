@@ -1,12 +1,16 @@
 package com.example.backend.models;
 
+import java.time.LocalDateTime;
+
 import com.example.backend.jwtModule.models.AppUser;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,19 +22,25 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "reclamation")
-public class Reclamation {
+@Table(name = "ticket_comments")
+public class Ticket_comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String description;
-    private String etat = "En attente";
+    private Long  id;
+    
     @ManyToOne
-    @JoinColumn(name = "id_service")
-    private ServiceModel service;
+    @JoinColumn(name = "ticket_id")
+    private Tickets ticket_id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private AppUser user_id;
+    private String message;
+    private LocalDateTime createdAt;
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    private AppUser user;
 }
