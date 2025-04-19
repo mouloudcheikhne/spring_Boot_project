@@ -73,7 +73,6 @@ public class mycontrollers {
         return myservice.getALLticktes();
     }
 
-
     @GetMapping("/admin/tickes/delte/{id}")
     public String delteticktes(@PathVariable Long id) {
         return myservice.deleteTickets(id);
@@ -83,13 +82,13 @@ public class mycontrollers {
     public String updateTickets(@PathVariable Long id, @RequestBody DtoTickets tek) {
         return myservice.updateTickets(id, tek);
     }
+
     @PostMapping("/admin/ticket/status/{id}")
-    public String postMethodName(@PathVariable Long id,@RequestBody Tickets entity) {
+    public String postMethodName(@PathVariable Long id, @RequestBody Tickets entity) {
         //TODO: process POST request
-        
+
         return myservice.changeStatus(id, entity);
     }
-    
 
     @PostMapping("/user/ticket_comments")
     public String postMethodName(@RequestBody DtoTicket_comment entity) {

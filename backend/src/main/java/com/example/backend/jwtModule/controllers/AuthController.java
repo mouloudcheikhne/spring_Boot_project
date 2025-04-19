@@ -136,7 +136,7 @@ public class AuthController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/admin/agent")
+    @GetMapping("/user/agent")
     public List<AppUser> getagents() {
         return userRepository.toutAgent();
     }
