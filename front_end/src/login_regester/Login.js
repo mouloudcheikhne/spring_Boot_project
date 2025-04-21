@@ -1,68 +1,68 @@
 import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import "./login.css";
+export default function Login({ usr }) {
+  const email = useRef();
+  const password = useRef();
+  const navigate = useNavigate();
 
-export default function Login({usr}) {
-  const [etat,setEat]=useState(false);
-  const nvigate=useNavigate();
-  const email=useRef()
-  const password=useRef()
-  const [donne,setdonne]=useState({})
-  const handesubmit=async(e)=>{
-e.preventDefault();
-// console.log(email.current.value);
-// console.log(password.current.value);
-const loginData={
-  "email":email.current.value,
-  "password":password.current.value
-}
-// setdonne((values)=>({...values,[email.current.name]:email.current.value,[password.current.name]:password.current.value}))
-try{
-  const res=await axios.post("http://localhost:8091/auth/login",loginData);
-  setdonne(res.data);
-      
-  localStorage.setItem("user",JSON.stringify(res.data))
-  const a=JSON.parse(localStorage.getItem("user"));
-  if(a.rol=="USER"){
-    usr(a);
-    console.log("user== "+a);
-    nvigate("/");
-    
-  }
-  if(a.rol=="ADMIN"){
-    console.log("admin== "+a);
-    usr(a);
-    nvigate("/admin");
-  }
-  else{
-    usr(null);
-  }
-  setEat(true);
-  
-}catch(error){
-  console.log(" il y a une erreur :", error.response.data.message );
-}
+  const [userTemp, setUserTemp] = useState(null); // stocke temporairement l'utilisateur après login
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    const loginData = {
+      email: email.current.value,
+      password: password.current.value
+    };
 
+    try {
+      const res = await axios.post("http://localhost:8093/auth/login", loginData);
+      const user = res.data;
+      localStorage.setItem("user", JSON.stringify(user));
+      setUserTemp(user); // on stocke temporairement
+    } catch (error) {
+      console.log("Erreur :", error.response?.data?.message || error.message);
+    }
+  };
 
-  }
-  useEffect(()=>{
-    console.log(donne)
- 
-    // console.log("user conect   "+JSON.parse(localStorage.getItem("user")))
-    
-  },[etat]);
+  useEffect(() => {
+    if (userTemp) {
+      usr(userTemp); // met à jour dans App.js
+      if (userTemp.rol === "USER") {
+        navigate("/");
+      } else if (userTemp.rol === "ADMIN") {
+        navigate("/admin");
+      }
+    }
+  }, [userTemp, usr, navigate]);
+
   return (
-    <div>
-      <h3>Login</h3>
-      <form method='post' onSubmit={handesubmit}>
-      <input type='text' ref={email} name="email" placeholder='entre email'/><br/>
-      <input type='text' ref={password} name="password" placeholder='entre password'/><br/>
-      <button>valide</button>
-
-      </form>
-
+    <div className="login-container">
+  <h3 className="login-title">Connexion</h3>
+  <form onSubmit={handleSubmit} className="login-form">
+    <div className="input-group">
+      <input
+        type="text"
+        ref={email}
+        name="email"
+        placeholder="Entrer email"
+        className="input-field"
+      />
     </div>
-  )
+    <div className="input-group">
+      <input
+        type="password"
+        ref={password}
+        name="password"
+        placeholder="Entrer mot de passe"
+        className="input-field"
+      />
+    </div>
+    <button type="submit" className="submit-button">Valider</button>
+  </form>
+</div>
+
+  );
 }

@@ -1,8 +1,9 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 import './App.css';
 import NavBar from './Navbar/NavBar';
-import AppUser from './user/AppUser';
+
 import Notification from './user/Notification';
 import Profile from './user/Profile';
 import Login from './login_regester/Login';
@@ -16,6 +17,9 @@ import Users from './admin/users';
 import ServiceCrude from './admin/serviceCrude';
 import Logout from './login_regester/logout';
 import ReclamationCrude from './admin/ReclamationCrude';
+import DashboardSummary from './user/DonneUser';
+import CraeteTikets from './user/craeteTikets';
+import Allticktes from './user/allticktes';
 function App() {
   const [user,setUser]=useState(()=>{
 
@@ -28,7 +32,7 @@ function App() {
   const getRout=()=>{
     if(!user){
       return [{path:"/",element:<Layout/>,children:[
-        {index:true,element:<Tout_service/>},
+        {index:true,element:<DashboardSummary/>},
         
       ]},
       {path:"/regester",element:<Regester/>},
@@ -38,11 +42,13 @@ function App() {
     }
     else if(user.rol=="USER"){
       return [ {path:"/",element:<Layout/>,children:[
-        {index:true,element:<Tout_service/>},
+        {index:true,element:<DashboardSummary/>},
         {path:"/notification",element:<Notification/>},
-        {path:"/profile",element:<Profile/>},
+        // Allticktes
+        {path:"/createticktes",element:<CraeteTikets/>},
+        {path:"/tickets",element:<Allticktes/>},
       ]},
-      {path:"/login",element:<Login/>},
+      {path:"/login",element:<Login usr={setUser}/>},
       {path:"/logout",element:<Logout usr={setUser}/>}
     ]
     }
@@ -59,7 +65,7 @@ function App() {
      
     }
     return [{path:"/",element:<Layout/>,children:[
-      {index:true,element:<Tout_service/>},
+      {index:true,element:<DashboardSummary/>},
       
     ]},
     {path:"/regester",element:<Regester/>},
@@ -71,7 +77,7 @@ function App() {
 
   const routing = useMemo(() => createBrowserRouter(getRout()), [user]);
   return (
-    <RouterProvider key={user?.rol} router={routing} />
+    <RouterProvider key={user?.rol || "guest"} router={routing} />
     
    
   

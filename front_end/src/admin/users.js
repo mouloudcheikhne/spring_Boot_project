@@ -9,11 +9,13 @@ export default function Users() {
   const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const rols=["ADMIN","USER","AGENT"]
 
   const email = useRef();
   const nom = useRef();
   const prenom = useRef();
   const password = useRef();
+  const rol = useRef();
 
   const nom_up = useRef();
   const prenom_up = useRef();
@@ -22,7 +24,7 @@ export default function Users() {
   
   const getData = async () => {
     try {
-      const res = await axios.get("http://localhost:8091/admin/users", {
+      const res = await axios.get("http://localhost:8093/admin/users", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -50,14 +52,19 @@ export default function Users() {
   // Ajouter un user
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("nouvel ro est = ",rol.current.value)
     const newUser = {
       nom: nom.current.value,
       prenom: prenom.current.value,
       email: email.current.value,
       password: password.current.value,
+      rol: rol.current.value,
     };
     try {
-      await axios.post("http://localhost:8091/auth/signup", newUser);
+      await axios.post("http://localhost:8093/admin/regester", newUser,{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }});
        nom.current.value = "";
     prenom.current.value = "";
     email.current.value = "";
@@ -76,7 +83,7 @@ export default function Users() {
       email: email_up.current.value,
     };
     try {
-      await axios.put(`http://localhost:8091/admin/updateuser/${id}`, userUp,{
+      await axios.put(`http://localhost:8093/admin/updateuser/${id}`, userUp,{
         headers: {
           Authorization: `Bearer ${token}`
         }}
@@ -91,7 +98,7 @@ export default function Users() {
   // delete user
   const deleteUser = async (id) => {
     try {
-      await axios.get(`http://localhost:8091/admin/deleteuser/${id}`,{
+      await axios.get(`http://localhost:8093/admin/deleteuser/${id}`,{
         headers: {
           Authorization: `Bearer ${token}`
         }});
@@ -109,6 +116,12 @@ export default function Users() {
         <input type="text" ref={prenom} placeholder="Prénom" className="form-control mb-2" />
         <input type="email" ref={email} placeholder="Email" className="form-control mb-2" />
         <input type="password" ref={password} placeholder="Mot de passe" className="form-control mb-2" />
+        <select ref={rol} className="form-control mb-2">
+          {rols.map((r)=>{
+            return <option value={r}>{r}</option>
+          })}
+
+        </select>
         <button className="btn btn-success">Ajouter</button>
       </form>
 
@@ -119,6 +132,7 @@ export default function Users() {
             <th>Nom</th>
             <th>Prénom</th>
             <th>Email</th>
+            <th>Rol</th>
             <th>Modifier</th>
             <th>Supprimer</th>
           </tr>
@@ -129,6 +143,7 @@ export default function Users() {
               <td>{u.nom}</td>
               <td>{u.prenom}</td>
               <td>{u.email}</td>
+              <td>{u.role}</td>
               <td>
                 <button className="btn btn-primary" onClick={() => { setSelectedUser(u); setShowModal(true); }}>
                   Modifier
