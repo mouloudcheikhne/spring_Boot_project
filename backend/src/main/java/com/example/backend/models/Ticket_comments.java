@@ -27,8 +27,8 @@ public class Ticket_comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long  id;
-    
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "ticket_id")
     private Tickets ticket_id;
@@ -37,10 +37,11 @@ public class Ticket_comments {
     private AppUser user_id;
     private String message;
     private LocalDateTime createdAt;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-        
+
     }
 
 }

@@ -69,6 +69,37 @@ public class mycontrollers {
         return "tickets pas enrengestre";
     }
 
+    @PostMapping("/admin/ajouttikets")
+    public String ajouteticktes(@RequestBody DtoTickets ticket) {
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<AppUser> opuser = userrepo.findByEmail(email);
+        if (opuser.isPresent()) {
+            Optional<AppUser> optionAgent = userrepo.findById(ticket.getUser_agent());
+            if (optionAgent.isPresent()) {
+
+                AppUser userAgent = optionAgent.get();
+                AppUser user = opuser.get();
+                Long id_user = user.getId();
+
+                // description service
+                Tickets tickets = Tickets.builder()
+                        .description(ticket.getDescription())
+                        .title(ticket.getTitle())
+                        .user_id(user)
+                        .user_AGENT(userAgent)
+                        .status("open")
+                        .build();
+                myrepo.save(tickets);
+                return "tickets est enregestre";
+            }
+
+            // title status user_id user_AGENT
+        }
+        return "tickets pas enrengestre";
+
+    }
+
     @GetMapping("/admin/tickes")
     public List<Tickets> getALLTickets() {
         return myservice.getALLticktes();
@@ -168,7 +199,7 @@ public class mycontrollers {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(Map.of("message", "\"il ya pas de donne")); 
+                .body(Map.of("message", "\"il ya pas de donne"));
         // }
     }
 
@@ -177,11 +208,23 @@ public class mycontrollers {
         //TODO: process POST request
 
         return myservice.changeStatus(id, entity);
+
     }
 
-    
+    @GetMapping("/agent/commit")
+    public ResponseEntity<?> getcommit() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<AppUser> opuser = userrepo.findByEmail(email);
+        if (opuser.isPresent()) {
+            AppUser user = opuser.get();
+            // System.out.println(user.getId());
+            List<Ticket_comments> v = ticketcommentsRepo.findcommintuser(user.getId());
+            System.out.println(v);
+            return ResponseEntity.ok(ticketcommentsRepo.findcommintuser(user.getId()));
+        }
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", "\"il ya pas de donne"));
+    }
+
 }
-                                                                              
-                
-                
-    

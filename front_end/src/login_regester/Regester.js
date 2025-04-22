@@ -1,12 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 export default function Regester() {
+  const navi=useNavigate();
   const nom=useRef();
   const prenom=useRef();
   const email=useRef();
   const password=useRef();
-  const handelsubmit=(e)=>{
+  const handelsubmit=async(e)=>{
     e.preventDefault();
     const user={
       "nom":nom.current.value,
@@ -14,10 +16,15 @@ export default function Regester() {
       "email":email.current.value,
       "password":password.current.value,
     }
-    axios.post("http://localhost:8099/auth/signup",user)
-    .then((res)=>console.log(res.data))
-    .catch((error)=>console.log(error.response.data.message))
-    console.log(user)
+    try{
+      await axios.post("http://localhost:8093/auth/signup",user);
+      navi("/");
+    }catch(error){
+        console.log("il ya une error le user pas enregestre")
+    }
+  //   .then((res)=>console.log(res.data))
+  //   .catch((error)=>console.log(error.response.data.message))
+  //   console.log(user)
   }
   return (
     <div>

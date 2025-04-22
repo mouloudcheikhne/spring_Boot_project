@@ -10,13 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.backend.models.Ticket_comments;
 import com.example.backend.models.Tickets;
+import com.example.backend.jwtModule.models.AppUser;
 
 public interface Ticket_commentsRepo extends JpaRepository<Ticket_comments, Long> {
 
-    // @Modifying
-    // @Transactional
-    // @Query("UPDATE Reclamation r SET r.etat = 'termine' WHERE r.id = :id")
-    // int changeEtat(@Param("id") Long id);
-    // @Query("SELECT r FROM Reclamation r JOIN r.user u WHERE u.id = :id")
-    // List<Tickets> rechercheReclamationsUser(@Param("id") Long id);
+    // List<Ticket_comments> find(AppUser user_id);
+    @Query("SELECT r FROM Ticket_comments r WHERE r.user_id.id = :id")
+    List<Ticket_comments> findcommintuser(@Param("id") Long id);
+
 }

@@ -1,69 +1,49 @@
-/* Style de base du conteneur */
+/* login.css */
+.containerlogin {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center; /* Modification ici */
+}
 .login-container {
-    width: 100%;
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Titre */
-  .login-title {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  /* Formulaire */
-  .login-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Groupes de champs de saisie */
-  .input-group {
-    margin-bottom: 15px;
-  }
-  
-  /* Champs de saisie */
-  .input-field {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-  }
-  
-  /* Focus sur les champs de saisie */
-  .input-field:focus {
-    border-color: #4CAF50;
-    outline: none;
-    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
-  }
-  
-  /* Bouton */
-  .submit-button {
-    padding: 12px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .submit-button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Afficher une petite animation sur le bouton */
-  .submit-button:active {
-    transform: scale(0.98);
-  }
-  
+  width: 400px;
+
+  /* margin: 0 auto; */
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-title {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  color: #495057;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-field {
+  padding: 1rem;
+  width: 100%;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}

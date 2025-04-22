@@ -171,4 +171,10 @@ public class AuthController {
 
     }
 
+    @GetMapping("/admin/allagent")
+    public List<AppUser> getagentsAdmin() {
+        return userRepository.toutAgent();
+    }
+    
+
 }

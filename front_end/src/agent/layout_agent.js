@@ -1,20 +1,17 @@
-
-import React, { useState,useEffect } from 'react';
+import React,{useState,useEffect} from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import '../user/layout.css'; // à créer pour les styles
 
-export default function Layout() {
-  const[user,setuser]=useState();
-      useEffect(() => {
-        const user = localStorage.getItem("user");
-        if (user) {
-          const a = JSON.parse(user);
-          setuser(a);
-          console.log(a);
-        }
-      }, []);
-    
-
+export default function LayoutAGENT() {
+      const[user,setuser]=useState();
+          useEffect(() => {
+            const user = localStorage.getItem("user");
+            if (user) {
+              const a = JSON.parse(user);
+              setuser(a);
+              console.log(a);
+            }
+          }, []);
   return (
     <div className="layout">
       {/* Sidebar */}
@@ -25,11 +22,9 @@ export default function Layout() {
       <ul className='ul'>
         <li className='li'> <Link to="/" className="menu-item"><i className="bi bi-house-door-fill me-2"></i> Dashboard</Link></li>
         <li className='li' > 
-      <Link to="/admin/ticktes" className="menu-item"><i className="bi bi-ticket-perforated-fill me-2"></i>Tickets</Link></li>
-        <li className='li'> <Link to="/admin/users" className="menu-item"><i className="bi bi-chat-dots-fill me-2"></i> Utilisateurs</Link>
-        </li>
-        <li className='li'> <Link to="/admin/ticktescommit" className="menu-item"><i className="bi bi-ticket-perforated-fill me-2"></i>Ticket commit</Link>
-        </li>
+      <Link to="/tickets" className="menu-item"><i className="bi bi-ticket-perforated-fill me-2"></i>Agent</Link></li>
+        <li className='li'> <Link to="/messages" className="menu-item"><i className="bi bi-ticket-perforated-fill me-2"></i>icktes</Link>
+       </li>
       </ul>
      
       
@@ -40,7 +35,7 @@ export default function Layout() {
   <div className="user-profile">
     {/* <img src="/logo512.png" alt="user" className="avatar" /> */}
     <i className="bi bi-person-circle p-4 h"></i>
-    <p>{user ? `${user.nom} ${user.prenom}` : "Chargement..."}</p>
+    <p><p>{user ? `${user.nom} ${user.prenom}` : "Chargement..."}</p></p>
     <Link to="/logout" className="logout icon"><i className="bi bi-box-arrow-left me-3 icon"></i>log out</Link>
   </div>
 </aside>
@@ -51,7 +46,7 @@ export default function Layout() {
         <header className="topbar">
           <div className="user-info">
           <i class="bi bi-bell-fill notification"></i>
-            <span>{user ? `${user.nom} ${user.rol}` : "Chargement..."} </span>
+            <span><p>{user ? `${user.nom} ${user.rol}` : "Chargement..."}</p></span>
           </div>
         </header>
         <section className="content">
@@ -62,4 +57,3 @@ export default function Layout() {
     </div>
   );
 }
-

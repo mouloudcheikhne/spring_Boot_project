@@ -9,10 +9,10 @@ export default function Logout({ usr }) {
     localStorage.removeItem("user");
     usr(null);
 
-    // Redirection après un léger délai
-    setTimeout(() => {
-      navigate("/"); // Rediriger vers la page d'accueil après déconnexion
-    }, 200); // Légère temporisation pour permettre la mise à jour de l'état
+    
+    navigate("/"); 
+    window.location.reload();
+   
 
   }, [usr, navigate]);
 

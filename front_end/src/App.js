@@ -16,10 +16,14 @@ import Layaout_Admin from './admin/layaout_Admin';
 import Users from './admin/users';
 import ServiceCrude from './admin/serviceCrude';
 import Logout from './login_regester/logout';
-import ReclamationCrude from './admin/ReclamationCrude';
+import ReclamationCrude from './admin/TecktesCrude';
 import DashboardSummary from './user/DonneUser';
 import CraeteTikets from './user/craeteTikets';
 import Allticktes from './user/allticktes';
+import TecktesCrude from './admin/TecktesCrude';
+import TicketCommitAdmin from './admin/ticketCommitAdmin';
+import LayoutAGENT from './agent/layout_agent';
+import Ticktesagent from './agent/ticktesagent';
 function App() {
   const [user,setUser]=useState(()=>{
 
@@ -31,12 +35,9 @@ function App() {
   
   const getRout=()=>{
     if(!user){
-      return [{path:"/",element:<Layout/>,children:[
-        {index:true,element:<DashboardSummary/>},
-        
-      ]},
-      {path:"/regester",element:<Regester/>},
-      {path:"/login",element:<Login usr={setUser}/>}
+      return [
+        {path:"/",element:<Login usr={setUser}/>},
+      {path:"/regester",element:<Regester/>}
         
       ]
     }
@@ -53,23 +54,33 @@ function App() {
     ]
     }
     else if(user.rol=="ADMIN"){
-      return [{path:"/admin",element:<Layaout_Admin/>,children:[
+      return [{path:"/",element:<Layaout_Admin/>,children:[
         {index:true,element:<Admin/>},
-        {path:"users",element:<Users/>},
-        {path:"service",element:<ServiceCrude/>},
-        {path:"reclamation",element:<ReclamationCrude/>},
-      ]}, {path:"/regester",element:<Regester/>},
+        {path:"/admin/users",element:<Users/>},
+        {path:"/admin/ticktes",element:<TecktesCrude/>},
+        {path:"/admin/ticktescommit",element:<TicketCommitAdmin/>},
+       
+      ]},
       
       {path:"/logout",element:<Logout usr={setUser}/>}
     ]
      
     }
-    return [{path:"/",element:<Layout/>,children:[
-      {index:true,element:<DashboardSummary/>},
+    else if(user.rol=="AGENT"){
+      // LayoutAGENT
+      return [{path:"/",element:<LayoutAGENT/>,children:[
+        {index:true,element:<Ticktesagent/>},
+        {path:"/agent/ticktes",element:<Users/>},
+        
+       
+      ]},
       
-    ]},
+      {path:"/logout",element:<Logout usr={setUser}/>}
+    ]
+    }
+    return [
+      {path:"/",element:<Login usr={setUser}/>},
     {path:"/regester",element:<Regester/>},
-    {path:"/login",element:<Login usr={setUser}/>}
       
     ]
   

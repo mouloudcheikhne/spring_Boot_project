@@ -1,20 +1,21 @@
-import axios from 'axios'
-import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import "./login.css";
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './login.css';
+
 export default function Login({ usr }) {
   const email = useRef();
   const password = useRef();
   const navigate = useNavigate();
 
-  const [userTemp, setUserTemp] = useState(null); // stocke temporairement l'utilisateur après login
+  const [userTemp, setUserTemp] = useState(null); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const loginData = {
       email: email.current.value,
-      password: password.current.value
+      password: password.current.value,
     };
 
     try {
@@ -33,36 +34,37 @@ export default function Login({ usr }) {
       if (userTemp.rol === "USER") {
         navigate("/");
       } else if (userTemp.rol === "ADMIN") {
-        navigate("/admin");
+        navigate("/");
       }
     }
   }, [userTemp, usr, navigate]);
 
   return (
+    <div className='containerlogin'>
     <div className="login-container">
-  <h3 className="login-title">Connexion</h3>
-  <form onSubmit={handleSubmit} className="login-form">
-    <div className="input-group">
-      <input
-        type="text"
-        ref={email}
-        name="email"
-        placeholder="Entrer email"
-        className="input-field"
-      />
+      <h3 className="login-title">Connexion</h3>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="input-group">
+          <input
+            type="email"
+            ref={email}
+            name="email"
+            placeholder="Entrer email"
+            className="input-field form-control"
+          />
+        </div>
+        <div className="input-group">
+          <input
+            type="password"
+            ref={password}
+            name="password"
+            placeholder="Entrer mot de passe"
+            className="input-field form-control"
+          />
+        </div>
+        <button type="submit" className="submit-button btn btn-primary">Valider</button>
+      </form>
     </div>
-    <div className="input-group">
-      <input
-        type="password"
-        ref={password}
-        name="password"
-        placeholder="Entrer mot de passe"
-        className="input-field"
-      />
     </div>
-    <button type="submit" className="submit-button">Valider</button>
-  </form>
-</div>
-
   );
 }

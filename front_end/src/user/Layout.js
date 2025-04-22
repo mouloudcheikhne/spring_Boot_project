@@ -1,8 +1,17 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import './layout.css'; // à créer pour les styles
 
 export default function Layout() {
+   const[user,setuser]=useState();
+        useEffect(() => {
+          const user = localStorage.getItem("user");
+          if (user) {
+            const a = JSON.parse(user);
+            setuser(a);
+            console.log(a);
+          }
+        }, []);
   return (
     <div className="layout">
       {/* Sidebar */}
@@ -28,7 +37,7 @@ export default function Layout() {
   <div className="user-profile">
     {/* <img src="/logo512.png" alt="user" className="avatar" /> */}
     <i className="bi bi-person-circle p-4 h"></i>
-    <p>Chris Client</p>
+    <p>{user?`${user.nom} ${user.prenom}`:"changeemnt ...."}</p>
     <Link to="/logout" className="logout icon"><i className="bi bi-box-arrow-left me-3 icon"></i>log out</Link>
   </div>
 </aside>
@@ -39,7 +48,7 @@ export default function Layout() {
         <header className="topbar">
           <div className="user-info">
           <i class="bi bi-bell-fill notification"></i>
-            <span>Chris Client</span>
+            <span>{user?`${user.nom} ${user.rol}`:"changeemnt ...."}</span>
           </div>
         </header>
         <section className="content">
