@@ -23,7 +23,7 @@ export default function Layout() {
         <li className='li'> <Link to="/" className="menu-item"><i className="bi bi-house-door-fill me-2"></i> Dashboard</Link></li>
         <li className='li' > 
       <Link to="/tickets" className="menu-item"><i className="bi bi-ticket-perforated-fill me-2"></i>Tickets</Link></li>
-        <li className='li'> <Link to="/messages" className="menu-item"><i className="bi bi-chat-dots-fill me-2"></i> Messages</Link>
+        <li className='li'> <Link to="/messagairi" className="menu-item"><i className="bi bi-chat-dots-fill me-2"></i> Messages</Link>
         </li>
         <li className='li'> <Link to="/createticktes" className="menu-item"><i className="bi bi-plus-lg me-2"></i>Create Ticket</Link>
         </li>

@@ -24,6 +24,8 @@ import TecktesCrude from './admin/TecktesCrude';
 import TicketCommitAdmin from './admin/ticketCommitAdmin';
 import LayoutAGENT from './agent/layout_agent';
 import Ticktesagent from './agent/ticktesagent';
+import CommitAgent from './agent/commitagent';
+import Message from './user/messaeg';
 function App() {
   const [user,setUser]=useState(()=>{
 
@@ -48,6 +50,7 @@ function App() {
         // Allticktes
         {path:"/createticktes",element:<CraeteTikets/>},
         {path:"/tickets",element:<Allticktes/>},
+        {path:"/messagairi",element:<Message/>},
       ]},
       {path:"/login",element:<Login usr={setUser}/>},
       {path:"/logout",element:<Logout usr={setUser}/>}
@@ -69,8 +72,8 @@ function App() {
     else if(user.rol=="AGENT"){
       // LayoutAGENT
       return [{path:"/",element:<LayoutAGENT/>,children:[
-        {index:true,element:<Ticktesagent/>},
-        {path:"/agent/ticktes",element:<Users/>},
+        {index:true,element:<Ticktesagent/>}, 
+        {path:"/agent/ticktes",element:<CommitAgent/>},
         
        
       ]},

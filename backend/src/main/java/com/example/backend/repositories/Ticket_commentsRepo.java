@@ -15,7 +15,25 @@ import com.example.backend.jwtModule.models.AppUser;
 public interface Ticket_commentsRepo extends JpaRepository<Ticket_comments, Long> {
 
     // List<Ticket_comments> find(AppUser user_id);
-    @Query("SELECT r FROM Ticket_comments r WHERE r.user_id.id = :id")
-    List<Ticket_comments> findcommintuser(@Param("id") Long id);
+    @Query("SELECT r FROM Ticket_comments r "
+            + "WHERE r.user_id.id = :userId "
+            + "AND r.ticket_id.id = :ticketId "
+            + "AND r.ticket_id.user_AGENT.id = :agentId")
+    List<Ticket_comments> findFilteredComments(
+            @Param("userId") Long userId,
+            @Param("ticketId") Long ticketId,
+            @Param("agentId") Long agentId
+    );
 
+    @Query("SELECT r FROM Ticket_comments r "
+            + "WHERE r.user_id.id = :userId "
+            + "AND r.ticket_id.id = :ticketId "
+    )
+    List<Ticket_comments> findFilteredCommentsuser(
+            @Param("userId") Long userId,
+            @Param("ticketId") Long ticketId
+    );
+
+    // @Query("SELECT r FROM Ticket_comments r WHERE r.user_id.id = :id ")
+    // List<Ticket_comments> find(@Param("id") Long id);
 }

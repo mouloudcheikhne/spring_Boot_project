@@ -25,6 +25,9 @@ import com.example.backend.models.Ticket_comments;
 import com.example.backend.repositories.Ticket_commentsRepo;
 import com.example.backend.repositories.TicketsRepo;
 import com.example.backend.services.Myservice;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -211,7 +214,7 @@ public class mycontrollers {
 
     }
 
-    @GetMapping("/agent/commit")
+    @GetMapping("/agent/commitsagent")
     public ResponseEntity<?> getcommit() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<AppUser> opuser = userrepo.findByEmail(email);
@@ -225,6 +228,57 @@ public class mycontrollers {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("message", "\"il ya pas de donne"));
+    }
+
+    @GetMapping("/agent/hhhh/{ticktid}/{userg}")
+    public ResponseEntity<?> getComments(@PathVariable Long ticktid, @PathVariable Long userg) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<AppUser> opuser = userrepo.findByEmail(email);
+        if (opuser.isPresent()) {
+            AppUser user = opuser.get();
+
+            // Check if agentId is the one in session (for extra validation, optional)
+            // if (!user.getId().equals(1)) {
+            //     return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            //             .body(Map.of("message", "Unauthorized access"));
+            // }
+            System.out.println(ticktid);
+            System.out.println(userg);
+            List<Ticket_comments> comments = ticketcommentsRepo.findFilteredComments(userg, ticktid, user.getId());
+
+            if (comments.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                        .body(Map.of("message", "No comments found"));
+            }
+
+            return ResponseEntity.ok(comments);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", "User not found"));
+    }
+
+    @GetMapping("/user/hhhh/{ticktid}")
+    public ResponseEntity<?> getComments(@PathVariable Long ticktid) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<AppUser> opuser = userrepo.findByEmail(email);
+        if (opuser.isPresent()) {
+            AppUser user = opuser.get();
+
+            System.out.println(ticktid);
+
+            List<Ticket_comments> comments = ticketcommentsRepo.findFilteredCommentsuser(user.getId(), ticktid);
+
+            if (comments.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                        .body(Map.of("message", "No comments found"));
+            }
+
+            return ResponseEntity.ok(comments);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", "User not found"));
     }
 
 }
