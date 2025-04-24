@@ -51,11 +51,11 @@ export default function TicketCommitAdmin() {
         console.log(allagent);
       }
     }, [token]);
-    const deleteTicktes=async(id)=>{
+    const deleteTicktecommit=async(id)=>{
         // /admin/deleterecalmtion/{id}
         // console.log(token);
         try {
-            await axios.get(`http://localhost:8093/admin/tickes/delte/${id}`, {
+            await axios.get(`http://localhost:8093/admin/ticket_comments/delete/${id}`, {
               headers: {
                 Authorization: `Bearer ${token}`
               }
@@ -166,7 +166,7 @@ export default function TicketCommitAdmin() {
                 </button>
               </td>
               <td>
-                <button className="btn btn-danger" onClick={() => deleteTicktes(u.id)}>
+                <button className="btn btn-danger" onClick={() => deleteTicktecommit(u.id)}>
                   Supprimer
                 </button>
               </td>

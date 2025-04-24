@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 
-
+const API_URL = process.env.REACT_APP_API_URL;
 export default function Ticktesagent() {
       const [token, setToken] = useState("");
       const [reclamtion, setReclamtion] = useState([]);
@@ -12,7 +12,7 @@ export default function Ticktesagent() {
     const status=["open","finich","en attent"];
     const getData = async () => {
         try {
-          const res = await axios.get("http://localhost:8093/agent/alltickts", {
+          const res = await axios.get(`${API_URL}/agent/alltickts`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -25,7 +25,7 @@ export default function Ticktesagent() {
       };
       const allgent=async()=>{
         try {
-          const res = await axios.get("http://localhost:8093/admin/allagent", {
+          const res = await axios.get(`${API_URL}/admin/allagent`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -62,7 +62,7 @@ export default function Ticktesagent() {
         // http://localhost:8099/admin/changereclamtion/2
 
         try {
-            await axios.post(`http://localhost:8093/admin/tickes/update/${id}`,newticktes, {
+            await axios.post(`${API_URL}/admin/tickes/update/${id}`,newticktes, {
               headers: {
                 Authorization: `Bearer ${token}`
               }
@@ -87,7 +87,7 @@ export default function Ticktesagent() {
             // http://localhost:8099/admin/changereclamtion/2
     
             try {
-                await axios.post(`http://localhost:8093/agent/ticket/status/${id}`,newstatus, {
+                await axios.post(`${API_URL}/agent/ticket/status/${id}`,newstatus, {
                   headers: {
                     Authorization: `Bearer ${token}`
                   }

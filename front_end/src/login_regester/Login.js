@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
-
+const API_URL = process.env.REACT_APP_API_URL;
 export default function Login({ usr }) {
   const email = useRef();
   const password = useRef();
@@ -19,7 +19,7 @@ export default function Login({ usr }) {
     };
 
     try {
-      const res = await axios.post("http://localhost:8093/auth/login", loginData);
+      const res = await axios.post(`${API_URL}/auth/login`, loginData);
       const user = res.data;
       localStorage.setItem("user", JSON.stringify(user));
       setUserTemp(user); // on stocke temporairement

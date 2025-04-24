@@ -281,4 +281,31 @@ public class mycontrollers {
                 .body(Map.of("message", "User not found"));
     }
 
+    @PostMapping("/agent/ajoutecommit")
+    public String agentcommit(@RequestBody DtoTicket_comment entity) {
+        //TODO: process POST request
+
+        Optional<AppUser> opuser = userrepo.findById(entity.getUserid());
+        if (opuser.isPresent()) {
+            AppUser user = opuser.get();
+
+            Optional<Tickets> tik = myrepo.findById(entity.getTicket_id());
+            if (tik.isPresent()) {
+                Tickets idTiktes = tik.get();
+
+                Ticket_comments ticketsComt = Ticket_comments.builder()
+                        .user_id(user)
+                        .message(entity.getMessage())
+                        .ticket_id(idTiktes)
+                        .differenceuser(true)
+                        .build();
+                ticketcommentsRepo.save(ticketsComt);
+                return "commit est transfer ";
+
+            }
+        }
+
+        return "commit pas  transfaire";
+    }
+
 }

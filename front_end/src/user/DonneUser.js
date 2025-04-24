@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+const API_URL = process.env.REACT_APP_API_URL;
 // /user/alltickts
 export default function DashboardSummary() {
     const[alltiktes,setalltiktes]=useState([]);
@@ -13,7 +14,7 @@ export default function DashboardSummary() {
             setToken(a.token);
     
             try {
-              const res = await axios.get("http://localhost:8093/user/alltickts", {
+              const res = await axios.get(`${API_URL}/user/alltickts`, {
                 headers: {
                   Authorization: `Bearer ${a.token}`,
                 },

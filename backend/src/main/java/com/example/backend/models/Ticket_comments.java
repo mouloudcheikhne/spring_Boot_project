@@ -37,6 +37,7 @@ public class Ticket_comments {
     private AppUser user_id;
     private String message;
     private LocalDateTime createdAt;
+    private boolean differenceuser;
 
     @PrePersist
     protected void onCreate() {

@@ -97,6 +97,7 @@ export default function TecktesCrude() {
       const newticktes={
         "title":title.current.value,
         "description":description.current.value,
+        "description":description.current.value,
         "user_agent":idagent.current.value,
       }
       try {
@@ -106,6 +107,8 @@ export default function TecktesCrude() {
           }
         });
         console.log("tickes est ajoute ");
+        title.current.value="";
+        description.current.value="";
         getData();
        
       } catch (error) {

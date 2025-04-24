@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+const API_URL = process.env.REACT_APP_API_URL;
 export default function Allticktes() {
      const [showModal, setShowModal] = useState(false);
      const[idticktes,setidticktes]=useState();
@@ -15,7 +16,7 @@ export default function Allticktes() {
             setToken(a.token);
     
             try {
-              const res = await axios.get("http://localhost:8093/user/alltickts", {
+              const res = await axios.get(`${API_URL}/user/alltickts`, {
                 headers: {
                   Authorization: `Bearer ${a.token}`,
                 },
@@ -38,7 +39,7 @@ export default function Allticktes() {
         }
         console.log(comentaier);
          try {
-              await axios.post("http://localhost:8093/user/ticket_comments",comentaier, {
+              await axios.post(`${API_URL}/user/ticket_comments`,comentaier, {
                 headers: {
                   Authorization: `Bearer ${token}`,
                 },

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+const API_URL = process.env.REACT_APP_API_URL;
 export default function Regester() {
   const navi=useNavigate();
   const nom=useRef();
@@ -17,7 +17,7 @@ export default function Regester() {
       "password":password.current.value,
     }
     try{
-      await axios.post("http://localhost:8093/auth/signup",user);
+      await axios.post(`${API_URL}/auth/signup`,user);
       navi("/");
     }catch(error){
         console.log("il ya une error le user pas enregestre")

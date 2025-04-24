@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+const API_URL = process.env.REACT_APP_API_URL;
 export default function CraeteTikets() {
   const [token, setToken] = useState("");
   const [agents, setAgents] = useState([]);
@@ -16,7 +17,7 @@ const navigate = useNavigate();
         setToken(a.token);
 
         try {
-          const res = await axios.get("http://localhost:8093/user/agent", {
+          const res = await axios.get(`${API_URL}/user/agent`, {
             headers: {
               Authorization: `Bearer ${a.token}`,
             },
@@ -42,7 +43,7 @@ const navigate = useNavigate();
     console.log(ticket);
 
     try {
-      await axios.post("http://localhost:8093/user/ticket", ticket, {
+      await axios.post(`${API_URL}/user/ticket`, ticket, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
