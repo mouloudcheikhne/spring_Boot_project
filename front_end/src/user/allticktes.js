@@ -54,7 +54,7 @@ export default function Allticktes() {
 
       
   return (
-<>
+<div className="container py-4">
 <h4 className="mb-3">📝 Détails des tickets</h4>
       <div className="row g-4">
         {alltiktes.map((ticket, index) => (
@@ -85,7 +85,7 @@ export default function Allticktes() {
                 <Button variant="primary" onClick={() => ajoute(idticktes)}>Enregistrer</Button>
               </Modal.Footer>
         </Modal>
-</>
+</div>
      
   )
 }

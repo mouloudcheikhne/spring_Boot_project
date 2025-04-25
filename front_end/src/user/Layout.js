@@ -34,11 +34,23 @@ export default function Layout() {
     </nav>
   </div>
 
-  <div className="user-profile">
-    {/* <img src="/logo512.png" alt="user" className="avatar" /> */}
-    <i className="bi bi-person-circle p-4 h"></i>
-    <p>{user?`${user.nom} ${user.prenom}`:"changeemnt ...."}</p>
-    <Link to="/logout" className="logout icon"><i className="bi bi-box-arrow-left me-3 icon"></i>log out</Link>
+  <div className="user-profile-horizontal">
+    <div className="profile-wrapper">
+      {user?.photo ? (
+        <img src={user.photo} alt="user" className="avatar-small" />
+      ) : (
+        <div className="avatar-placeholder-small">
+          <i className="bi bi-person-circle"></i>
+        </div>
+      )}
+      <div className="user-info-short">
+        <p className="user-name">{user ? `${user.nom} ${user.prenom}` : "Loading..."}</p>
+        <p className="user-role">{user?.role || "User"}</p>
+      </div>
+    </div>
+    <Link to="/logout" className="logout-btn-icon" title="Logout">
+      <i className="bi bi-box-arrow-right"></i>
+    </Link>
   </div>
 </aside>
 

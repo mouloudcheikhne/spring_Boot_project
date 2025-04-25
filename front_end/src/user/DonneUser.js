@@ -46,7 +46,7 @@ export default function DashboardSummary() {
         <div className="col-md-3">
           <div className="card text-black  bg-light  h-100 shadow">
             <div className="card-body">
-              <h5 className="card-title">✅ Réalisés</h5>
+              <h5 className="card-title">✅ Done with</h5>
               <p className="card-text display-6">86</p>
             </div>
           </div>
@@ -54,7 +54,7 @@ export default function DashboardSummary() {
         <div className="col-md-3">
           <div className="card text-black  bg-light h-100 shadow">
             <div className="card-body">
-              <h5 className="card-title">⚙️ En cours</h5>
+              <h5 className="card-title">⚙️ In progress</h5>
               <p className="card-text display-6">28</p>
             </div>
           </div>
@@ -62,7 +62,7 @@ export default function DashboardSummary() {
         <div className="col-md-3">
           <div className="card text-black  bg-light shadow">
             <div className="card-body">
-              <h5 className="card-title">❌ Annulés</h5>
+              <h5 className="card-title">❌ Rejected</h5>
               <p className="card-text display-6">10</p>
             </div>
           </div>
@@ -70,7 +70,7 @@ export default function DashboardSummary() {
       </div>
 
       {/* Ticket Cards */}
-      <h4 className="mb-3">📝 Détails des tickets</h4>
+      <h4 className="mb-3">📝 Tickets details</h4>
       <div className="row g-4">
         {alltiktes.map((ticket, index) => (
           <div key={index} className="col-md-3">
