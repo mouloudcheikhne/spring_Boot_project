@@ -21,6 +21,7 @@ import com.example.backend.jwtModule.repositories.UserRepository;
 import com.example.backend.models.DtoTicket_comment;
 import com.example.backend.models.Tickets;
 import com.example.backend.models.DtoTickets;
+import com.example.backend.models.Predict;
 import com.example.backend.models.Ticket_comments;
 import com.example.backend.repositories.Ticket_commentsRepo;
 import com.example.backend.repositories.TicketsRepo;
@@ -307,5 +308,19 @@ public class mycontrollers {
 
         return "commit pas  transfaire";
     }
+
+    @PostMapping("/agent/predict")
+    public ResponseEntity<?> predictAgent(@RequestBody Predict entity) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<AppUser> opuser = userrepo.findByEmail(email);
+        
+        if (opuser.isPresent()) {
+            AppUser user = opuser.get(); // <-- point-virgule ajouté ici
+            return myservice.getPrediction(user.getId(), entity.getDate());
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "il ya une erreur"));
+        }
+    }
+    
 
 }

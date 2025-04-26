@@ -1,10 +1,14 @@
 package com.example.backend.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.backend.jwtModule.models.AppUser;
 import com.example.backend.models.DtoTicket_comment;
@@ -16,7 +20,9 @@ import com.example.backend.repositories.TicketsRepo;
 import com.example.backend.repositories.UsersRepo;
 
 import jakarta.transaction.Transactional;
-
+import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
+import java.util.Map;
 @Service
 public class Myservice {
 
@@ -26,7 +32,7 @@ public class Myservice {
     UsersRepo usersRepo;
     @Autowired
     private Ticket_commentsRepo ticket_commentsRepo;
-
+    private final String flaskUrl = "http://127.0.0.1:5000/predict"; 
     public List<Tickets> getALLticktes() {
         return tickesRepo.findAll();
     }
@@ -123,5 +129,38 @@ public class Myservice {
         }
         return "Ticket_comments pas update";
     }
+   
+
+
+
+    public ResponseEntity<?> getPrediction(Long agent, String date) {
+        RestTemplate restTemplate = new RestTemplate();
+        
+        String flaskUrl = "http://localhost:5000/predict"; 
+        
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("agent", agent);
+        requestBody.put("date", date);
+    
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+    
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+    
+        try {
+            ResponseEntity<String> response = restTemplate.postForEntity(flaskUrl, requestEntity, String.class);
+            return ResponseEntity.ok(response.getBody());
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(Map.of("message", "Erreur dans la prédiction", "error", e.getMessage()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body(Map.of("message", "Erreur interne", "error", e.getMessage()));
+        }
+    }
+    
+
 
 }

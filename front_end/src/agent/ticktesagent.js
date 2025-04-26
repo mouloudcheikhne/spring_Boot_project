@@ -102,9 +102,41 @@ export default function Ticktesagent() {
               }
           
       };
+      const [valeurPredict,setValeurPredict]=useState();
+      const datepredict=useRef();
+      const handlpredict = async () => {
+        console.log(datepredict.current.value);
+        const datelewle = datepredict.current.value; 
+    
+        
+        const [year, month, day] = datelewle.split("-");
+        const date = `${day}-${month}-${year}`;
+    
+        const datep = {
+            "date": date
+        };
+    
+       
+    
+        try {
+            const res = await axios.post(`${API_URL}/agent/predict`, datep, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            // console.log(res.data);
+            setValeurPredict(res.data)
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    
   return (
     <>
- 
+        <input type='date' ref={datepredict} />
+        <button onClick={handlpredict} className='btn btn-outline-primary'>predict</button>
+        {valeurPredict && <p>valeur de tickte dans cette jour est{valeurPredict.prediction} </p>}
           <h1 className="mt-5">Liste des ticktes</h1>
       <table className="table table-striped mt-3">
         <thead>
