@@ -1,4 +1,3 @@
-# python-ml-api/app.py
 from flask import Flask, request, jsonify
 import numpy as np
 import random
@@ -7,7 +6,8 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 
 import numpy as np
-from sklearn.ensemble import RandomForestRegressor
+
+from sklearn.linear_model import LinearRegression
 
 
 data = []
@@ -28,36 +28,16 @@ def jours_dans_mois(mois, annee):
 
 
 def trinig(C):
-    for i in range(5):
-        for j in C:
-            for k in range(12):
-                stoke = []
-                mois = k + 1
-                annee = 2021 + (k + 1)
-                max_jour = jours_dans_mois(mois, annee)
-                jour = random.randint(1, max_jour)
-                date = f"{jour}-{mois}-{annee}"
-
-                if j == 1:
-                    if jour <= 10:
-                        nomber_tickte = random.randint(20, 35)
-                    else:
-                        nomber_tickte = random.randint(8, 15)
-                elif j == 5:
-                    if jour > 10 and jour <= 20:
-                        nomber_tickte = random.randint(20, 35)
-                    else:
-                        nomber_tickte = random.randint(8, 15)
-                else:
-                    if jour > 20:
-                        nomber_tickte = random.randint(20, 35)
-                    else:
-                        nomber_tickte = random.randint(8, 15)
-
-                stoke.append(j)
-                stoke.append(date)
-                stoke.append(nomber_tickte)
-                data.append(stoke)
+    for agent in agents:
+        for mois in range(1, 13):
+            jours_max = jours_dans_mois(mois, 2023)
+            for jour in range(1, jours_max + 1):
+                nomber_normal_tiktes = agent * 2 + jour * 0.5 + mois * 1.5
+                # print(nomber_normal_tiktes)
+                tickets = int(nomber_normal_tiktes + random.uniform(-2, 2))
+                # print(tickets)
+                date = f"{jour}-{mois}-2023"
+                data.append([agent, date, tickets])
 
 
 trinig(agents)
@@ -78,7 +58,7 @@ X = np.array([[g[i], jours[i], month[i]] for i in range(len(data))])
 y = np.array([ligne[2] for ligne in data])
 
 
-model = RandomForestRegressor()
+model = LinearRegression()
 model.fit(X, y)
 r2 = model.score(X, y)
 print(f"R² = {r2:.3f}")
@@ -104,8 +84,24 @@ def predict():
 
         return jsonify({"prediction": prediction}), 200
     except Exception as e:
-        print(f"Erreur : {str(e)}")
         return jsonify({"error": "Erreur interne du serveur: " + str(e)}), 500
+
+
+@app.route("/predict/toutagent", methods=["POST"])
+def predict_tout_agent():
+    try:
+        data = request.get_json()
+        date_str = data["date"]
+        date = datetime.strptime(date_str, "%d-%m-%Y")
+
+        predict_tout = []
+        for i in agents:
+            prediction = model.predict(np.array([[int(i), date.day, date.month]]))[0]
+            predict_tout.append({"agent": i, "prediction": prediction})
+
+        return jsonify(predict_tout), 200
+    except Exception as e:
+        return jsonify({"error": "Erreur interne du serveur"}), 500
 
 
 if __name__ == "__main__":

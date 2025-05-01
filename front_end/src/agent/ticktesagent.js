@@ -25,7 +25,7 @@ export default function Ticktesagent() {
       };
       const allgent=async()=>{
         try {
-          const res = await axios.get(`${API_URL}/admin/allagent`, {
+          const res = await axios.get(`${API_URL}/agent/allagent`, {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -62,7 +62,7 @@ export default function Ticktesagent() {
         // http://localhost:8099/admin/changereclamtion/2
 
         try {
-            await axios.post(`${API_URL}/admin/tickes/update/${id}`,newticktes, {
+            await axios.post(`${API_URL}/agent/tickes/update/${id}`,newticktes, {
               headers: {
                 Authorization: `Bearer ${token}`
               }

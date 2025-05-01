@@ -321,6 +321,18 @@ public class mycontrollers {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "il ya une erreur"));
         }
     }
+    @PostMapping("/admin/predict_tout_agent")
+    public ResponseEntity<?> predictToutAgent(@RequestBody Predict entity) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<AppUser> opuser = userrepo.findByEmail(email);
+        
+        if (opuser.isPresent()) {
+            AppUser user = opuser.get(); // <-- point-virgule ajouté ici
+            return myservice.getpredictionToutAgent( entity.getDate());
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "il ya une erreur"));
+        }
+    }
     
 
 }
