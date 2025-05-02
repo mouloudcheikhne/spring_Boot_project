@@ -17,7 +17,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtil {
 
-    private final SecretKey key = Keys.hmacShaKeyFor("supersecretkey12345678901234567890".getBytes()); // at least 256-bit
+    private final SecretKey key = Keys.hmacShaKeyFor("supersecretkey12345678901234567890".getBytes()); 
     private final Serializer<Map<String, ?>> serializer = new JacksonSerializer<>();
     private final Deserializer<Map<String, ?>> deserializer = new JacksonDeserializer<>();
 
@@ -48,7 +48,7 @@ public class JwtUtil {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
-                .get("role", String.class);  // ✅ تستخرج role من claims
+                .get("role", String.class);  
     }
     public boolean validateToken(String token) {
         try {
