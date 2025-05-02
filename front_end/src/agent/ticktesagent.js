@@ -9,7 +9,7 @@ export default function Ticktesagent() {
       const [showModal, setShowModal] = useState(false);
         const [selectedTiktes, setSelectedTicktes] = useState(null);
       const[allagent,setAgent]=useState([]);
-    const status=["open","finich","en attent"];
+    const status=["open","Closed","In progress"];
     const getData = async () => {
         try {
           const res = await axios.get(`${API_URL}/agent/alltickts`, {
