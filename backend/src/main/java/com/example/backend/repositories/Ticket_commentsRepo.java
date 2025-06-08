@@ -34,6 +34,9 @@ public interface Ticket_commentsRepo extends JpaRepository<Ticket_comments, Long
             @Param("ticketId") Long ticketId
     );
 
+    @Query("SELECT r FROM Ticket_comments r WHERE r.user_id.id = :userId")
+    List<Ticket_comments> findcommintuser(@Param("userId") Long userId);
+
     // @Query("SELECT r FROM Ticket_comments r WHERE r.user_id.id = :id ")
     // List<Ticket_comments> find(@Param("id") Long id);
 }

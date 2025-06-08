@@ -111,26 +111,28 @@ public class Myservice {
     }
 
     public String ticketCommentsUpdate(Long id, DtoTicket_comment tec) {
-        Optional<Ticket_comments> optionalTicket_comments = ticket_commentsRepo.findById(id);
-        if (optionalTicket_comments.isPresent()) {
-            Ticket_comments s = optionalTicket_comments.get();
-            // ticket_id
-            if (tec.getMessage() != null) {
-                s.setMessage(tec.getMessage());
-            }
-            if (tec.getTicket_id() != null) {
-                Optional<Tickets> optionalTickets = tickesRepo.findById(tec.getTicket_id());
-                if (optionalTickets.isPresent()) {
-                    s.setTicket_id(tec.getTicket_id());
-                }
-
-            }
-            ticket_commentsRepo.save(s);
-            return "Ticket_comments est upadte";
-
+    Optional<Ticket_comments> optionalTicket_comments = ticket_commentsRepo.findById(id);
+    if (optionalTicket_comments.isPresent()) {
+        Ticket_comments s = optionalTicket_comments.get();
+        
+        if (tec.getMessage() != null) {
+            s.setMessage(tec.getMessage());
         }
-        return "Ticket_comments pas update";
+        
+        if (tec.getTicket_id() != null) {
+            Optional<Tickets> optionalTickets = tickesRepo.findById(tec.getTicket_id());
+            if (optionalTickets.isPresent()) {
+                s.setTicket_id(optionalTickets.get());  // Changed to pass Tickets object
+            } else {
+                return "Ticket not found";
+            }
+        }
+        
+        ticket_commentsRepo.save(s);
+        return "Ticket_comments est update";
     }
+    return "Ticket_comments pas update";
+}
 
     public ResponseEntity<?> getPrediction(Long agent, String date) {
         RestTemplate restTemplate = new RestTemplate();
