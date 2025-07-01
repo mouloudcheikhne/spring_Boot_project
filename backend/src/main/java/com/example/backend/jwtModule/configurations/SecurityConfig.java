@@ -59,17 +59,33 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000")); // 👈 frontend
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
+    // @Bean
+    // public CorsConfigurationSource corsConfigurationSource() {
+    //     CorsConfiguration config = new CorsConfiguration();
+    //     config.setAllowedOrigins(List.of(
+    //             "http://localhost:3000",
+    //             "http://10.0.2.2:8093", // Port cohérent avec Android
+    //             "http://localhost:8093", // Pour les tests locaux
+    //             "http://127.0.0.1:8093" // Alternative à localhost
+    //     ));
+    //     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    //     config.setAllowedHeaders(List.of("*"));
+    //     config.setAllowCredentials(true); // Important si vous utilisez des cookies/sessions
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", config);
+    //     return source;
+    // }
+    @Bean
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowedOrigins(List.of("*"));  // Autorise tout
+    config.setAllowedMethods(List.of("*"));
+    config.setAllowedHeaders(List.of("*"));
+    
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config);
+    return source;
+}
 
 }
